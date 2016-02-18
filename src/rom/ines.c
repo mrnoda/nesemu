@@ -8,28 +8,38 @@ static const char *str_header_version(enum ines_header_variant header_variant);
 struct ines_file *load_rom(const char *filename)
 {
     FILE *f = fopen(filename, "r"); 
-    if (f == NULL)
+    if (!f)
     {
         fprintf(stderr, "Could not open file '%s'\n", filename);
+        fclose(f);
         return NULL;
     }
 
-    size_t hdr_size = sizeof(struct ines_header);
-    void *ines = calloc(hdr_size, 1);
-    if (ines == NULL)
+    // Verify the magic ines constant occupies the first 4 bytes of the file
+    if (fgetc(f) != 'N' || fgetc(f) != 'E' || fgetc(f) != 'S' || fgetc(f) != 0x1A)
     {
+        fprintf(stderr, "File format unsupported, expected iNES\n");
+        fclose(f);
         return NULL;
     }
+    rewind(f);
 
-    size_t bytes_read = fread(ines, 1, hdr_size, f);
-    if (bytes_read != hdr_size)
+    const size_t hdr_size = sizeof(struct ines_header);
+    void *ines = calloc(hdr_size, 1);
+    if (fread(ines, 1, hdr_size, f) != hdr_size)
     {
         fprintf(stderr, "Failed to read rom file '%s\n", filename);
-        return NULL;
+        goto error;
     }
+
+    // TODO: read the rest of the file into memory
 
     fclose(f);
     return ines;
+
+    error:
+        fclose(f);
+        return NULL;
 }
 
 void unload_rom(struct ines_file *rom)

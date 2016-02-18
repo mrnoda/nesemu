@@ -21,9 +21,10 @@ int main(int argc, char *argv[])
 void reset_nes(const char *filename)
 {
     struct ines_file *rom = load_rom(filename);
-    if (rom == NULL)
+    if (!rom)
     {
         fprintf(stderr, "Failed to load rom\n");
+        unload_rom(rom);
         exit(EXIT_FAILURE);
     }
 
