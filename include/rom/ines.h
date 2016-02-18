@@ -3,6 +3,15 @@
 
 #include <stdint.h>
 
+/* iNES header versions, as described at wiki.nesdev.com */
+enum ines_header_variant
+{
+    archaic,
+    ines,
+    nes_20
+};
+
+
 /* iNES file header format, as described at wiki.nesdev.com */
 struct ines_header
 {
@@ -25,7 +34,8 @@ struct ines_file
 };
 
 struct ines_file *load_rom(const char *filename);
+enum ines_header_variant header_version(const struct ines_header *header);
 void unload_rom(struct ines_file *rom);
-void print_rom_info(struct ines_file *rom);
+void print_rom_info(const struct ines_file *rom);
 
 #endif
