@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "rom/ines.h"
+#include "nes/cartridge/cart.h"
+#include "nes/nes.h"
 
-void reset_nes(const char *filename);
+int play_rom(const char *filename);
 
 int main(int argc, char *argv[])
 {
@@ -13,21 +14,22 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
 
-    reset_nes(argv[1]);
-
-    return EXIT_SUCCESS;
+    return play_rom(argv[1]);
 }
 
-void reset_nes(const char *filename)
+int play_rom(const char *filename)
 {
-    struct ines_file *rom = load_rom(filename);
-    if (!rom)
+    struct cart *cartridge = load_cartridge(filename);
+    if (!cartridge)
     {
         fprintf(stderr, "Failed to load rom\n");
-        unload_rom(rom);
-        exit(EXIT_FAILURE);
+        return EXIT_FAILURE;
     }
-
-    print_rom_info(rom);
-    unload_rom(rom);
+    else
+    {
+        nes_load(cartridge);
+        nes_reset();
+        return EXIT_SUCCESS;
+    }
 }
+

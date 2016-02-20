@@ -1,5 +1,5 @@
-#ifndef INES_H
-#define INES_H
+#ifndef NES_CARTRIDGE_INES_H
+#define NES_CARTRIDGE_INES_H
 
 #include <stdint.h>
 
@@ -38,4 +38,4 @@ enum ines_header_variant header_version(const struct ines_header *header);
 void unload_rom(struct ines_file *rom);
 void print_rom_info(const struct ines_file *rom);
 
-#endif
+#endif /* NES_CARTRIDGE_INES_H */

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "rom/ines.h"
+#include "nes/cartridge/ines.h"
 
 static const char *str_header_version(enum ines_header_variant header_variant);
 
@@ -11,7 +11,6 @@ struct ines_file *load_rom(const char *filename)
     if (!f)
     {
         fprintf(stderr, "Could not open file '%s'\n", filename);
-        fclose(f);
         return NULL;
     }
 
@@ -19,8 +18,7 @@ struct ines_file *load_rom(const char *filename)
     if (fgetc(f) != 'N' || fgetc(f) != 'E' || fgetc(f) != 'S' || fgetc(f) != 0x1A)
     {
         fprintf(stderr, "File format unsupported, expected iNES\n");
-        fclose(f);
-        return NULL;
+        goto error;
     }
     rewind(f);
 
