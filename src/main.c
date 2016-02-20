@@ -4,9 +4,11 @@
 #include "main.h"
 #include "nes/cartridge/cart.h"
 #include "nes/nes.h"
+#include "version.h"
 
 int main(int argc, char *argv[])
 {
+    printf("nesemu %s\n", VERSION);
     if (argc != 2)
     {
         fprintf(stderr, "Usage: %s <file>\n", argv[0]);
@@ -27,7 +29,7 @@ int play_rom(const char *filename)
     else
     {
         nes_load(cartridge);
-        nes_reset();
+        nes_power_on();
         return EXIT_SUCCESS;
     }
 }
