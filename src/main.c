@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "main.h"
 #include "nes/cartridge/cart.h"
 #include "nes/nes.h"
-
-int play_rom(const char *filename);
 
 int main(int argc, char *argv[])
 {
