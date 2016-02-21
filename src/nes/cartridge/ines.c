@@ -35,9 +35,9 @@ struct ines_file *load_rom(const char *filename)
     fclose(f);
     return ines;
 
-    error:
-        fclose(f);
-        return NULL;
+error:
+    fclose(f);
+    return NULL;
 }
 
 void unload_rom(struct ines_file *rom)

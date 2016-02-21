@@ -7,9 +7,6 @@
 /** Natural word size of the CPU. */
 typedef uint8_t word_t;
 
-/** The clock speed of the CPU, measured in Hz. */
-extern const int CLOCK_SPEED_HZ;
-
 /** A representation of the NES CPU, based on the MOS 6502. */
 struct cpu
 {
@@ -30,5 +27,8 @@ uint8_t read_mem(word_t address);
 
 /** Write a byte to memory at a given address. */
 void write_mem(word_t address, uint8_t value);
+
+/** Fetch and execute the next instruction. */
+void cpu_step(struct cpu *cpu);
 
 #endif /* CPU_CPU_H */

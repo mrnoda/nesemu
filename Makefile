@@ -1,7 +1,7 @@
 src = $(shell find src -name '*.c')
 obj = $(src:.c=.o)
 
-CFLAGS = -I./include -g
+CFLAGS = -I./include --std=c99 -g -Wpedantic
 LDFLAGS = -lm
 
 bin/nesemu: $(obj)
