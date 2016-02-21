@@ -22,11 +22,11 @@ struct ines_file *load_rom(const char *filename)
     }
     rewind(f);
 
-    const size_t hdr_size = sizeof(struct ines_header);
-    void *ines = calloc(hdr_size, 1);
+    struct ines_file *ines = calloc(1, sizeof(struct ines_file));
+    size_t hdr_size = sizeof(struct ines_header);
     if (fread(ines, 1, hdr_size, f) != hdr_size)
     {
-        fprintf(stderr, "Failed to read rom file '%s\n", filename);
+        fprintf(stderr, "Failed to read rom file '%s'\n", filename);
         goto error;
     }
 

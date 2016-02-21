@@ -21,7 +21,6 @@ void nes_destroy(struct nes *nes)
         free(nes->cart);
     }
     free(nes->cpu);
-    //    free(nes);
 }
 
 void nes_power_on(struct nes *nes)

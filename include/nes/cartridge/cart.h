@@ -9,7 +9,7 @@ struct cart
     uint8_t reserved;
 };
 
-/** Load a cartridge from a file. */
+/* Load a cartridge from a file. */
 struct cart *load_cartridge(const char *filepath);
 
 #endif /* NES_CARTRIDGE_CART_H */
